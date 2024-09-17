@@ -13,6 +13,16 @@ class ConcreteFactory1 implements AbstractFactory {
     }
 }
 
+class ConcreteFactory2 implements AbstractFactory {
+    public createProductA(): AbstractProductA {
+        return new ConcreteProductA2();
+    }
+
+    public createProductB(): AbstractProductB {
+        return new ConcreteProductB2();
+    }
+}
+
 interface AbstractProductA {
     usefulFunctionA(): string;
 }
@@ -33,3 +43,39 @@ interface AbstractProductB {
     usefulFunctionB(): string;
     anotherUsefulFunctionB(collaborator: AbstractProductA): string;
 }
+
+class ConcreteProductB1 implements AbstractProductB {
+    public usefulFunctionB(): string {
+        return 'The result of product B1';
+    }
+
+    public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
+        const result = collaborator.usefulFunctionA();
+        return `The result of the B1 collaborator with the (${result})`;
+    }
+}
+
+class ConcreteProductB2 implements AbstractProductB {
+    public usefulFunctionB(): string {
+        return 'The result of the product B2.'
+    }
+
+    public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
+        const result = collaborator.usefulFunctionA();
+        return `The result of the B2 collaborating with the (${result})`;
+    }
+}
+
+function clientCode(factory: AbstractFactory) {
+    const productA = factory.createProductA();
+    const productB = factory.createProductB();
+
+    console.log(productB.usefulFunctionB());
+    console.log(productB.anotherUsefulFunctionB(productA));
+}
+
+console.log('Client: Testing client code with the first factory type...');
+clientCode(new ConcreteFactory1());
+console.log('');
+console.log('Client: Testing client code with the secondary factory type...');
+clientCode(new ConcreteFactory2());
