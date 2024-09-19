@@ -66,7 +66,7 @@ class ConcreteProductB2 implements AbstractProductB {
     }
 }
 
-function clientCode(factory: AbstractFactory) {
+function clientCode1(factory: AbstractFactory) {
     const productA = factory.createProductA();
     const productB = factory.createProductB();
 
@@ -75,7 +75,7 @@ function clientCode(factory: AbstractFactory) {
 }
 
 console.log('Client: Testing client code with the first factory type...');
-clientCode(new ConcreteFactory1());
+clientCode1(new ConcreteFactory1());
 console.log('');
 console.log('Client: Testing client code with the secondary factory type...');
-clientCode(new ConcreteFactory2());
+clientCode1(new ConcreteFactory2());
